@@ -15,17 +15,10 @@ function Card(props) {
       <br />
 
       <div className="text-center">
-<<<<<<< HEAD
-        <img
-          alt="card-img"
-          src={"./img/" + props.img}
-          className="text-center img-fluid"
-=======
         <img 
           alt="card-img" 
           src={images[props.img]} // Use mapped import
           className="text-center img-fluid" 
->>>>>>> 2e0daae8528f96cc4f5105d13bd4ed108e592408
         />
       </div>
       <div className="text-center">
