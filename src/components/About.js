@@ -1,3 +1,5 @@
+import img1 from "../img/img1.png"
+
 function About() {
   return (
     <>
@@ -9,11 +11,15 @@ function About() {
       <div className="container about">
         <div className="row">
           <div className="col-md-6 text-center">
+<<<<<<< HEAD
             <img
               alt="about"
               src=""
               className="img-fluid"
             />
+=======
+            <img alt="about" src={img1} className="img-fluid" />
+>>>>>>> 2e0daae8528f96cc4f5105d13bd4ed108e592408
           </div>
           <div className="col-md-6">
             <h2 className="main-title about-h2">ABOUT</h2>
