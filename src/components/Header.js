@@ -1,7 +1,9 @@
+import video from '../video.mp4'
+
 function Header() {
   return (
     <header>
-      <video src="./video.mp4" loop autoPlay muted></video>
+      <video src={video} loop autoPlay muted></video>
       <h1>WE ARE ATHUL COLORS</h1>
       <div className="row">
         {/* <button className="btn" style={{ cursor: "pointer" }}>
