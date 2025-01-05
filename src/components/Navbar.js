@@ -41,7 +41,7 @@ function Navbar() {
               to="headerbg"
               style={{ cursor: "pointer" }}
             >
-              DarkLeas
+              Athul Colors
             </Link>
           </h1>
           <ul className="bar">
@@ -66,7 +66,7 @@ function Navbar() {
                 smooth={true}
                 duration={1000}
               >
-                Services
+                Products
               </Link>
             </li>
             <li>
