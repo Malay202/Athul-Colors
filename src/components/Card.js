@@ -1,3 +1,5 @@
+import { useState } from 'react';
+import { motion } from 'framer-motion';
 import card1 from '../img/card1.png';
 import card2 from '../img/card2.png';
 import card3 from '../img/card3.png';
@@ -5,29 +7,52 @@ import card3 from '../img/card3.png';
 const images = {
   "card1.png": card1,
   "card2.png": card2,
-  "card3.png": card3
+  "card3.png": card3,
 };
 
 function Card(props) {
-  console.log(props.img);
-  return (
-    <div className="card">
-      <br />
+  const [isOpen, setIsOpen] = useState(false);
 
+  const toggleCard = () => {
+    setIsOpen((prev) => !prev);
+  };
+
+  return (
+    <motion.div
+      className="card"
+      onClick={toggleCard}
+      style={{ cursor: "pointer", overflow: "hidden" }}
+      initial={{ borderRadius: "10px" }}
+      animate={{ borderRadius: isOpen ? "20px" : "10px" }}
+      transition={{ duration: 0.3 }}
+    >
+      {/* Image Section */}
       <div className="text-center">
         <img 
           alt="card-img" 
-          src={images[props.img]} // Use mapped import
+          src={images[props.img]} 
           className="text-center img-fluid" 
         />
       </div>
+
+      {/* Title Section */}
       <div className="text-center">
         <h3 className="card-title">{props.title}</h3>
       </div>
-      <div className="p-3">
+
+      {/* Motion Text Section */}
+      <motion.div
+        initial={{ height: 0, opacity: 0 }}
+        animate={{
+          height: isOpen ? "auto" : 0,
+          opacity: isOpen ? 1 : 0,
+        }}
+        transition={{ duration: 0.3 }}
+        className="p-3"
+      >
         <p className="card-text">{props.text}</p>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 }
 
