@@ -1,41 +1,48 @@
 function Contact() {
   return (
-    <div className="container contact">
-      <h2 className="main-title text-center">CONTACT</h2>
-      <div className="col-md-12">
-        <div className="row">
-          <div className="col-md-4 mb-1">
-            <input name="name" placeholder="Name" className="contact-input" />
-          </div>
+    <form method="post" action="/">
+      <div className="container contact">
+        <h2 className="main-title text-center">CONTACT</h2>
 
-          <div className="col-md-4 mb-1">
-            <input name="email" placeholder="Email" className="contact-input" />
-          </div>
-          <div className="col-md-4 mb-1">
-            <input
-              name="subject"
-              placeholder="Subject"
-              className="contact-input"
-            />
+        <div className="col-md-12">
+          <div className="row">
+            <div className="col-md-4 mb-1">
+              <input
+                name="name"
+                id="name"
+                placeholder="Name"
+                className="contact-input"
+              />
+            </div>
+
+            <div className="col-md-4 mb-1">
+              <input
+                name="email"
+                id="email"
+                placeholder="Email"
+                className="contact-input"
+              />
+            </div>
           </div>
         </div>
-      </div>
-      <br />
-      <div className="col-md-12">
-      <textarea
-            name="message"
-            placeholder="Message"
+        <br />
+        <div className="col-md-8">
+          <textarea
+            name="orderinfo"
+            id="orderinfo"
+            placeholder="Add your order details"
             className="contact-textarea"
           />
-      </div>
+        </div>
 
-      <br></br>
-      <div className="row">
-        <div className="col-md-12">
-          <input className="form-btn" type="submit" value="Send Message" />
+        <br></br>
+        <div className="row">
+          <div className="col-md-8">
+            <input className="form-btn" type="submit" value="Submit" />
+          </div>
         </div>
       </div>
-    </div>
+    </form>
   );
 }
 export default Contact;

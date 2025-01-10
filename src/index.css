@@ -73,6 +73,9 @@ code {
 .col-md-12 {
   width: 100%;
 }
+.col-md-8{
+  width: 69%;
+}
 .col-md-6 {
   width: 49.9%;
 }
