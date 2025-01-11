@@ -1,6 +1,6 @@
 function Contact() {
   return (
-    <form method="post" action="http://localhost:8080/">
+    <form method="post" action="http://localhost:5000/">
       <div className="container contact">
         <h2 className="main-title text-center">CONTACT</h2>
 
