@@ -73,6 +73,16 @@ code {
 .col-md-12 {
   width: 100%;
 }
+.col-md-12:first-child {
+  margin-right: 1rem;
+}
+.col-md-12:last-child {
+  margin-left: 1rem;
+}
+.col-md-10{
+  width:25%;
+  margin: 0 auto; 
+}
 .col-md-8 {
   width: 69%;
 }
@@ -361,7 +371,7 @@ ul li a {
   border: 0;
   outline: 0;
   cursor: pointer;
-  font-size: 20px;
+  font-size: 25px;
   border-radius: 5px;
   text-decoration: none;
   color: white;
@@ -369,7 +379,7 @@ ul li a {
   font-weight: 500;
   z-index: 1;
   background-color: #01bf71;
-  padding: 10px 50px;
+  padding: 15px 50px;
 
   transition: background-color 0.2s;
 }
@@ -381,8 +391,8 @@ ul li a {
   width: 100% !important;
   min-width: 100% !important;
   max-width: 100% !important;
-  height: 300px;
-  min-height: 300px;
+  height: 200px;
+  min-height: px;
   max-height: 600px;
 
   outline: 0;

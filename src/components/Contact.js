@@ -60,7 +60,7 @@ function Contact() {
 
         <div className="col-md-12">
           <div className="row">
-            <div className="col-md-4 mb-1">
+            <div className="col-md-12 mb-1">
               <input
                 name="name"
                 id="name"
@@ -72,7 +72,7 @@ function Contact() {
               {formErrors.name && <span style={{ color: 'red'}}>{formErrors.name}</span>}
             </div>
 
-            <div className="col-md-4 mb-1">
+            <div className="col-md-12 mb-1">
               <input
                 name="email"
                 id="email"
@@ -86,7 +86,7 @@ function Contact() {
           </div>
         </div>
         <br />
-        <div className="col-md-8">
+        <div className="col-md-12 mb-1">
           <textarea
             name="orderinfo"
             id="orderinfo"
@@ -100,7 +100,7 @@ function Contact() {
 
         <br></br>
         <div className="row">
-          <div className="col-md-8">
+          <div className="col-md-10">
             <input className="form-btn" type="submit" value="Submit" />
           </div>
         </div>

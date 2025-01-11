@@ -46,13 +46,13 @@ function Footer() {
                 <p className="footer-title">Contact</p>
                 <ul>
                   <li>
-                    <Link to="#" >burhankcd@gmail.com</Link>
+                    <Link to="#" >athulcolours@gmail.com</Link>
                   </li>
                   <li>
-                    <Link to="#" > Burhan #3265</Link>
+                    <Link to="#" >+91 6282354761</Link>
                   </li>
                   <li>
-                    <Link to="#" >0212 444 44 44</Link>
+                    <Link to="#" >+91 8075774406</Link>
                   </li>
                 </ul>
               </div>
