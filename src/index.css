@@ -73,7 +73,7 @@ code {
 .col-md-12 {
   width: 100%;
 }
-.col-md-8{
+.col-md-8 {
   width: 69%;
 }
 .col-md-6 {
@@ -83,7 +83,6 @@ code {
   margin: 0 1rem !important;
   width: 100%;
 }
-
 .col-md-4 {
   width: 33.3%;
 }
@@ -93,7 +92,6 @@ code {
 .col-md-4:last-child {
   margin-left: 1rem;
 }
-
 .x {
   margin: 0rem 1rem !important;
   width: 33.3%;
@@ -350,14 +348,14 @@ ul li a {
 }
 
 .contact-input {
-  color: white;
+  color: black;
   border-radius: 5px;
   padding: 15px 0px 10px 5px;
   font-size: 20px;
   width: 100%;
   outline: 0;
   border: 0;
-  background-color: rgba(0, 0, 0, 0.76);
+  background-color: #dcdcdc;
 }
 .form-btn {
   border: 0;
@@ -376,7 +374,7 @@ ul li a {
   transition: background-color 0.2s;
 }
 .contact-textarea {
-  color: white;
+  color: black;
   border-radius: 5px;
   padding: 15px 0px 10px 5px;
   font-size: 20px;
@@ -389,7 +387,7 @@ ul li a {
 
   outline: 0;
   border: 0;
-  background-color: rgba(0, 0, 0, 0.76);
+  background-color: #dcdcdc;
 }
 
 @media (max-width: 1300px) {
