@@ -392,8 +392,8 @@ ul li a {
   min-width: 100% !important;
   max-width: 100% !important;
   height: 200px;
-  min-height: px;
-  max-height: 600px;
+  min-height: 200px;
+  max-height: 450px;
 
   outline: 0;
   border: 0;

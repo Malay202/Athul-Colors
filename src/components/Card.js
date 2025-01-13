@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import card1 from '../img/card1.png';
-import card2 from '../img/card2.png';
-import card3 from '../img/card3.png';
+import card1 from '../img/Pigment-Fine-paste.jpg';
+import card2 from '../img/Coir-Coatings.jpg';
+import card3 from '../img/Artist-Paint.jpg';
 
 const images = {
   "card1.png": card1,
