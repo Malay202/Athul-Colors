@@ -1,32 +1,35 @@
-import { Link } from "react-scroll";
+// components/Navbar.js
+import React, { useEffect } from 'react';
+import { Link as ScrollLink } from 'react-scroll';
+import { Link as RouterLink } from 'react-router-dom';
 
 function Navbar() {
-  document.addEventListener("scroll", function (e) {
-    if (window.screen.width < 768 && window.scrollY > 690) {
-      const gotop = document.querySelector(".gotop");
-      gotop.classList.add("display");
+  useEffect(() => {
+    const handleScroll = () => {
+      const gotop = document.querySelector('.gotop');
+      const nav = document.querySelector('.navbar');
 
-      const nav = document.querySelector(".navbar");
+      if (window.screen.width < 768 && window.scrollY > 690) {
+        gotop?.classList.add('display');
+        nav?.classList.add('navopened');
+      } else if (window.screen.width >= 768 && window.scrollY > 220) {
+        gotop?.classList.add('display');
+        nav?.classList.add('navopened');
+      } else {
+        gotop?.classList.remove('display');
+        nav?.classList.remove('navopened');
+      }
+    };
 
-      nav.classList.add("navopened");
-    } else if (window.screen.width > 768 && window.scrollY > 220) {
-      const gotop = document.querySelector(".gotop");
-      gotop.classList.add("display");
+    document.addEventListener('scroll', handleScroll);
+    return () => {
+      document.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
-      const nav = document.querySelector(".navbar");
-
-      nav.classList.add("navopened");
-    } else {
-      const nav = document.querySelector(".navbar");
-      const gotop = document.querySelector(".gotop");
-      gotop.classList.remove("display");
-      nav.classList.remove("navopened");
-    }
-  });
   function openBar() {
-    const bar = document.querySelector(".bar");
-
-    bar.classList.toggle("opened");
+    const bar = document.querySelector('.bar');
+    bar?.classList.toggle('opened');
   }
 
   return (
@@ -34,19 +37,19 @@ function Navbar() {
       <div className="container">
         <div className="row">
           <h1 className="logo">
-            <Link
+            <ScrollLink
               spy={true}
               smooth={true}
               duration={1000}
               to="headerbg"
-              style={{ cursor: "pointer" }}
+              style={{ cursor: 'pointer' }}
             >
               Athul Colors
-            </Link>
+            </ScrollLink>
           </h1>
           <ul className="bar">
             <li>
-              <Link
+              <ScrollLink
                 onClick={openBar}
                 activeClass="active"
                 spy={true}
@@ -55,10 +58,10 @@ function Navbar() {
                 to="headerbg"
               >
                 Home
-              </Link>
+              </ScrollLink>
             </li>
             <li>
-              <Link
+              <ScrollLink
                 onClick={openBar}
                 activeClass="active"
                 to="services"
@@ -67,10 +70,10 @@ function Navbar() {
                 duration={1000}
               >
                 Products
-              </Link>
+              </ScrollLink>
             </li>
             <li>
-              <Link
+              <ScrollLink
                 onClick={openBar}
                 to="about-scroll"
                 spy={true}
@@ -79,10 +82,10 @@ function Navbar() {
                 activeClass="active"
               >
                 About
-              </Link>
+              </ScrollLink>
             </li>
             <li>
-              <Link
+              <ScrollLink
                 onClick={openBar}
                 to="contact"
                 spy={true}
@@ -91,7 +94,17 @@ function Navbar() {
                 activeClass="active"
               >
                 Contact
-              </Link>
+              </ScrollLink>
+            </li>
+            <li>
+              <RouterLink onClick={openBar} to="/login">
+                Login
+              </RouterLink>
+            </li>
+            <li>
+              <RouterLink onClick={openBar} to="/signup">
+                Sign Up
+              </RouterLink>
             </li>
           </ul>
           <div className="button" onClick={openBar}>
@@ -104,4 +117,5 @@ function Navbar() {
     </nav>
   );
 }
+
 export default Navbar;

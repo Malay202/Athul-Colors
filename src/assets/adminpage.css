@@ -1,0 +1,95 @@
+/* Page background */
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(120deg, rgb(255, 251, 124), white, rgb(203, 246, 159));
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+  }
+  
+  /* Container styling */
+  .table-container {
+    padding: 20px;
+    background: linear-gradient(125deg, #6a11cb, #ffffff, #2575fc);
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    text-align: center;
+  }
+  
+  /* Heading */
+  .table-heading {
+    color: #333534;
+    text-decoration: underline;
+    margin-bottom: 15px;
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  /* Table styling */
+  .order-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 18px;
+    text-align: left;
+    background-color: #ffffff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Table header */
+  .order-table thead tr {
+    background-color: #6a11cb;
+    color: white;
+  }
+  
+  .order-table th {
+    padding: 15px;
+    border: none;
+  }
+  
+  /* Table rows */
+  .order-table tbody tr {
+    transition: background 0.3s;
+  }
+  
+  .order-table .even-row {
+    background-color: #f0f0ff; /* Light purple */
+  }
+  
+  .order-table .odd-row {
+    background-color: #ffffff;
+  }
+  
+  /* Table cells */
+  .order-table td {
+    padding: 15px;
+    border: none;
+  }
+  
+  /* Action button */
+  .delete-button {
+    background-color: #579653;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  
+  .delete-button:hover {
+    background-color: #cc0000;
+  }
+  
+  /* No orders message */
+  .no-orders {
+    text-align: center;
+    color: #666;
+    font-size: 16px;
+    margin-top: 15px;
+  }
+  
