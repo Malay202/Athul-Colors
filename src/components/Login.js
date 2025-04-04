@@ -18,11 +18,12 @@ export default function Login() {
     try {
       const response = await axios.post("http://localhost:8080/api/login", credentials);
       toast.success("Login Successful!");
-      if(response.data.user.isAdmin) {
+      const {id, isAdmin} = response.data.user;
+      if(isAdmin) {
         navigate("/AdminPage")
       }
       else{
-        navigate("/UserPage")
+        navigate(`/User/${id}`)
       }
     } catch (error) {
       toast.error("Login failed. Please try again.");

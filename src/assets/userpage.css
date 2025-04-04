@@ -1,0 +1,82 @@
+/* Container styling for the UserPage */
+.userpage-container {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  /* Order table styling */
+  .order-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+  .order-table th,
+  .order-table td {
+    padding: 12px;
+    border: 1px solid #ddd;
+  }
+  
+  .order-table th {
+    background-color: #6a11cb;
+    color: #fff;
+    font-size: 18px;
+  }
+  
+  .order-table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  /* Floating Create Order Button */
+  .create-order-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 15px 20px;
+    background-color: #2575fc;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    font-size: 18px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s;
+  }
+  
+  .create-order-btn:hover {
+    background-color: #6a11cb;
+  }
+  
+  /* Create Order Form styling */
+  .create-order-form {
+    margin-top: 20px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+    display: inline-block;
+    text-align: left;
+  }
+  
+  .create-order-form form div {
+    margin-bottom: 15px;
+  }
+  
+  .create-order-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  .create-order-form input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  

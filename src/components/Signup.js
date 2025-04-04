@@ -20,8 +20,12 @@ export default function SignUp() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:8080/api/signup", formData);
+      const response = await axios.post("http://localhost:8080/api/signup", formData);
       toast.success("Signup Success!")
+      console.log(response);
+      const userId = response.data.user._id;
+
+      navigate(`/User/${userId}`)
     } catch (error) {
       console.log(error)
       toast.error("Signup Failed. Please try again.")

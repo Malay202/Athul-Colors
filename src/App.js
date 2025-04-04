@@ -30,7 +30,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/SignUp" element={<SignUp />} />
         <Route path="/AdminPage" element={<AdminPage />} />
-        <Route path="/UserPage" element={<UserPage />} />
+        <Route path="/User/:id" element={<UserPage />} />
       </Routes>
       {/* Add ToastContainer here so it works across the app */}
       <ToastContainer
