@@ -9,7 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Login from "./components/Login";
 import SignUp from "./components/Signup";
 import AdminPage from "./components/AdminPage";
-import UserPage from "./components/UserPage";
+import OrderPage from "./components/OrderPage";
 
 function Homepage() {
   return (
@@ -30,7 +30,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/SignUp" element={<SignUp />} />
         <Route path="/AdminPage" element={<AdminPage />} />
-        <Route path="/User/:id" element={<UserPage />} />
+        <Route path="/Order/:id" element={<OrderPage />} />
       </Routes>
       {/* Add ToastContainer here so it works across the app */}
       <ToastContainer

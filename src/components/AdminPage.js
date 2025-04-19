@@ -20,9 +20,10 @@ export default function AdminPage() {
     fetchUserDetails();
   }, []);
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (id, id1) => {
     try {
-      await axios.delete(`http://localhost:8080/api/admin/order/${id}`);
+      await axios.delete(`http://localhost:8080/api/order/${id}`);
+      await axios.delete(`http://localhost:8080/api/user/${id1}`);
       toast.success("Deleted the order successfully!");
       setData(data.filter(item => item._id !== id));
     } catch (err) {
@@ -63,7 +64,7 @@ export default function AdminPage() {
                   )}
                 </td>
                 <td className="action-cell">
-                  <button className="delete-button" onClick={() => handleDelete(item._id)}>
+                  <button className="delete-button" onClick={() => handleDelete(item._id, item.userId)}>
                     Mark Complete
                   </button>
                 </td>

@@ -23,7 +23,7 @@ export default function Login() {
         navigate("/AdminPage")
       }
       else{
-        navigate(`/User/${id}`)
+        navigate(`/Order/${id}`)
       }
     } catch (error) {
       toast.error("Login failed. Please try again.");

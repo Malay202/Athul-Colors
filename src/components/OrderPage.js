@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import "../assets/userpage.css"; // Make sure this file is in the correct path
+import "../assets/orderpage.css"; // Make sure this file is in the correct path
 
-export default function UserPage() {
+export default function OrderPage() {
   const { id } = useParams();
   const [orders, setOrders] = useState([]);
   const [showForm, setShowForm] = useState(false);
@@ -11,20 +11,19 @@ export default function UserPage() {
     productName: "",
     quantity: 1,
   });
-  const [userData, setUserData] = useState([]);
 
   // Fetch orders when component mounts or when id changes
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/api/user/${id}`)
+      .get(`http://localhost:8080/api/order/${id}`)
       .then((response) => {
         // Assuming response.data.orderinfo holds the orders array
-        setOrders(response.data.orderinfo || []);
-        console.log(response);
-        setUserData({name:response.data.name, email: response.data.email});
+        setOrders(response.data || []);
       })
       .catch((err) => console.log("Error fetching orders:", err));
-  }, [id]);
+    }, [id]);
+    
+    // Properly handle the user data axios call
 
   // Toggle the create order form
   const toggleForm = () => {
@@ -37,21 +36,18 @@ export default function UserPage() {
     setNewOrder((prev) => ({ ...prev, [name]: value }));
   };
 
-  console.log(userData);
 
   // Handle form submission to create a new order
   const handleCreateOrder = (e) => {
-    e.preventDefault();
     // Prepare the payload with the user's id and the new order info
+    e.preventDefault();
     const payload = {
       userId: id,
-      userName: userData.name,
-      email: userData.email,
-      orderinfo: [{ productName: newOrder.productName, quantity: Number(newOrder.quantity) }],
+      orders: [{ productName: newOrder.productName, quantity: Number(newOrder.quantity) }],
     };
 
     axios
-      .post(`http://localhost:8080/api/user/${id}`, payload)
+      .post(`http://localhost:8080/api/order/${id}`, payload)
       .then((response) => {
         // Update orders state:
         // If the product already exists, update its quantity; otherwise, add the new order.
@@ -95,7 +91,6 @@ export default function UserPage() {
       ) : (
         <p>No orders available.</p>
       )}
-      {JSON.stringify(userData)}
       {/* Floating Create Order Button */}
       <button className="create-order-btn" onClick={toggleForm}>
         {showForm ? "Cancel" : "Create Order"}
