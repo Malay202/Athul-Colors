@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import axios from "axios";
 import "../assets/orderpage.css"; // Make sure this file is in the correct path
 
@@ -18,7 +19,7 @@ export default function OrderPage() {
       .get(`http://localhost:8080/api/order/${id}`)
       .then((response) => {
         // Assuming response.data.orderinfo holds the orders array
-        setOrders(response.data || []);
+        setOrders(response.data.orders || []);
       })
       .catch((err) => console.log("Error fetching orders:", err));
     }, [id]);
@@ -36,6 +37,17 @@ export default function OrderPage() {
     setNewOrder((prev) => ({ ...prev, [name]: value }));
   };
 
+  const handleDelete = async (itemId) => {
+    try {
+      await axios.delete(`http://localhost:8080/api/order/${id}/${itemId}`);
+      setOrders((prev) => prev.filter((item) => item._id !== itemId));
+      toast.success("Deleted the order successfully!");
+    } catch (error) {
+      console.error("Error deleting order:", error);
+      toast.error("Failed to delete the order.");
+    }
+  };
+  
 
   // Handle form submission to create a new order
   const handleCreateOrder = (e) => {
@@ -45,6 +57,7 @@ export default function OrderPage() {
       userId: id,
       orders: [{ productName: newOrder.productName, quantity: Number(newOrder.quantity) }],
     };
+
 
     axios
       .post(`http://localhost:8080/api/order/${id}`, payload)
@@ -77,6 +90,7 @@ export default function OrderPage() {
             <tr>
               <th>Product Name</th>
               <th>Quantity</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -84,6 +98,11 @@ export default function OrderPage() {
               <tr key={index}>
                 <td>{order.productName}</td>
                 <td>{order.quantity}</td>
+                <td className="action-cell">
+                  <button className="delete-button" onClick={()=>handleDelete(order._id)}>
+                    Mark Complete
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>
