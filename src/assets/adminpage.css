@@ -80,4 +80,27 @@
     font-size: 16px;
     margin-top: 15px;
   }
-  
+
+  /* New wrapper for heading + button */
+.header-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+/* Tweak your go-back button */
+.go-back-button {
+  padding: 0.5rem 1rem;
+  background-color: #6c757d;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 1rem;
+}
+
+.go-back-button:hover {
+  background-color: #5a6268;
+}

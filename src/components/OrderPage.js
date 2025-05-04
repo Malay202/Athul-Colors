@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
 import "../assets/orderpage.css"; // Make sure this file is in the correct path
+import {useNavigate} from "react-router-dom"
 
 export default function OrderPage() {
   const { id } = useParams();
@@ -12,6 +13,12 @@ export default function OrderPage() {
     productName: "",
     quantity: 1,
   });
+
+  const  navigate = useNavigate();
+
+  function handleGoBack(){
+    navigate("/company-website-reactjs");
+  }
 
   // Fetch orders when component mounts or when id changes
   useEffect(() => {
@@ -83,6 +90,7 @@ export default function OrderPage() {
 
   return (
     <div className="userpage-container">
+      <button onClick={handleGoBack} className="go-back-button">Logout</button>
       <h2>User Orders</h2>
       {orders.length > 0 ? (
         <table className="order-table">

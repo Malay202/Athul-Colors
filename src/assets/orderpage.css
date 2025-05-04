@@ -79,4 +79,23 @@
     border: 1px solid #ccc;
     border-radius: 4px;
   }
+
+  .go-back-button {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    padding: 0.75rem 1.5rem;
+    background-color: #6c757d;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
   
+  /* Optional: hover effect */
+  .go-back-button:hover {
+    background-color: #5a6268;
+  }
+    
