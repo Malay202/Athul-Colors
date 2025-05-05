@@ -81,7 +81,7 @@
     margin-top: 15px;
   }
 
-  /* New wrapper for heading + button */
+/* New wrapper for heading + button */
 .header-actions {
   display: flex;
   justify-content: space-between;
@@ -103,4 +103,159 @@
 
 .go-back-button:hover {
   background-color: #5a6268;
+}
+
+/* Ensure your container wraps both table and forms */
+.product-table.container {
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background: linear-gradient(125deg, #ffffff, #e8e8ff, #ffffff);
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  text-align: center;
+}
+
+/* Header */
+.product-table.container > h2 {
+  margin-bottom: 1rem;
+  color: #333;
+  font-size: 1.75rem;
+  font-weight: 600;
+}
+
+/* Products table */
+.product-table.container table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.5rem;
+}
+
+.product-table.container table thead tr {
+  background-color: #2575fc;
+  color: white;
+}
+
+.product-table.container table th,
+.product-table.container table td {
+  padding: 0.75rem 1rem;
+  border: none;
+  font-size: 1rem;
+}
+
+.product-table.container table tbody tr:nth-child(even) {
+  background-color: #f7f9ff;
+}
+
+.product-table.container table tbody tr:nth-child(odd) {
+  background-color: #ffffff;
+}
+
+/* Forms layout inside the same container */
+.product-table.container form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem; /* space between forms or bottom of container */
+}
+
+/* Inputs and selects */
+.product-table.container form input[type="text"],
+.product-table.container form select {
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 1rem;
+  min-width: 180px;
+}
+
+/* Buttons in forms */
+.product-table.container form button {
+  padding: 0.5rem 1rem;
+  background-color: #6a11cb;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.product-table.container form button:hover {
+  background-color: #4e0fa3;
+}
+
+/* Responsive: stack vertically on narrow screens */
+@media (max-width: 600px) {
+  .product-table.container form {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+
+/* Shared card base */
+.add-product-card,
+.delete-product-card {
+  background-color: #fff9e6;       /* light yellow tint */
+  border: 1px solid #ffeeba;       /* soft yellow border */
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+  max-width: 400px;
+  margin: 1.5rem auto;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Headings inside cards */
+.add-product-card h3,
+.delete-product-card h3 {
+  margin-top: 0;
+  color: #8a6d3b;
+  font-size: 1.25rem;
+  text-align: center;
+  margin-bottom: 0.75rem;
+}
+
+/* Forms inside cards */
+.add-product-card form,
+.delete-product-card form {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* Inputs and selects */
+.add-product-card input[type="text"],
+.delete-product-card select {
+  flex: 1 1 200px;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+/* Buttons in cards */
+.add-product-card button,
+.delete-product-card button {
+  padding: 0.5rem 1.25rem;
+  background-color: #f0ad4e;      /* bootstrap warning tint */
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.add-product-card button:hover,
+.delete-product-card button:hover {
+  background-color: #ec971f;
+}
+
+/* Responsive stacking */
+@media (max-width: 480px) {
+  .add-product-card form,
+  .delete-product-card form {
+    flex-direction: column;
+  }
 }

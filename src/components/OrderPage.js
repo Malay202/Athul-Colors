@@ -13,6 +13,7 @@ export default function OrderPage() {
     productName: "",
     quantity: 1,
   });
+  const [products, setProducts] = useState([]);
 
   const  navigate = useNavigate();
 
@@ -32,6 +33,12 @@ export default function OrderPage() {
     }, [id]);
     
     // Properly handle the user data axios call
+
+
+    //call the api to get products list.
+    useEffect(()=>{
+      axios.get("http://localhost:8080/api/products").then(res=>setProducts(res.data));
+    }, []);
 
   // Toggle the create order form
   const toggleForm = () => {
@@ -130,14 +137,17 @@ export default function OrderPage() {
           <form onSubmit={handleCreateOrder}>
             <div>
               <label htmlFor="productName">Product Name:</label>
-              <input
-                type="text"
-                name="productName"
-                id="productName"
+              <select
+                name="productName"                   // add a name so your generic handler can catch it
                 value={newOrder.productName}
-                onChange={handleInputChange}
+                onChange={handleInputChange}         // re-use your existing handler
                 required
-              />
+              >
+                <option value="" disabled>Select a product…</option>
+                {products.map(p => (
+                  <option key={p._id} value={p.name}>{p.name}</option>
+                ))}
+              </select>
             </div>
             <div>
               <label htmlFor="quantity">Quantity:</label>
