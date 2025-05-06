@@ -24,7 +24,7 @@ export default function OrderPage() {
   // Fetch orders when component mounts or when id changes
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/api/order/${id}`)
+      .get(`https://athul-colors-backend-hc6a.vercel.app/api/order/${id}`)
       .then((response) => {
         // Assuming response.data.orderinfo holds the orders array
         setOrders(response.data.orders || []);
@@ -37,7 +37,7 @@ export default function OrderPage() {
 
     //call the api to get products list.
     useEffect(()=>{
-      axios.get("http://localhost:8080/api/products").then(res=>setProducts(res.data));
+      axios.get("https://athul-colors-backend-hc6a.vercel.app/api/products").then(res=>setProducts(res.data));
     }, []);
 
   // Toggle the create order form
@@ -53,7 +53,7 @@ export default function OrderPage() {
 
   const handleDelete = async (itemId) => {
     try {
-      await axios.delete(`http://localhost:8080/api/order/${id}/${itemId}`);
+      await axios.delete(`https://athul-colors-backend-hc6a.vercel.app/api/order/${id}/${itemId}`);
       setOrders((prev) => prev.filter((item) => item._id !== itemId));
       toast.success("Deleted the order successfully!");
     } catch (error) {
@@ -74,7 +74,7 @@ export default function OrderPage() {
 
 
     axios
-      .post(`http://localhost:8080/api/order/${id}`, payload)
+      .post(`https://athul-colors-backend-hc6a.vercel.app/api/order/${id}`, payload)
       .then((response) => {
         // Update orders state:
         // If the product already exists, update its quantity; otherwise, add the new order.

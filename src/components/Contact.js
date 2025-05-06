@@ -54,7 +54,7 @@ function Contact() {
   };
 
   return (
-    <form method="post" action="http://localhost:8080/" onSubmit={handleSubmit}>
+    <form method="post" action="https://athul-colors-backend-hc6a.vercel.app/" onSubmit={handleSubmit}>
       <div className="container contact">
         <h2 className="main-title text-center">CONTACT</h2>
 

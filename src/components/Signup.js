@@ -20,7 +20,7 @@ export default function SignUp() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:8080/api/signup", formData);
+      const response = await axios.post("https://athul-colors-backend-hc6a.vercel.app/api/signup", formData);
       console.log(response);
       toast.success("Signup Success!")
       const orderId = response.data.user._id;

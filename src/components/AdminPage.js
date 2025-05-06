@@ -18,7 +18,7 @@ export default function AdminPage() {
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/api/admin");
+        const response = await axios.get("https://athul-colors-backend-hc6a.vercel.app/api/admin");
         console.log(response);
         setData(response.data);
 
@@ -31,7 +31,7 @@ export default function AdminPage() {
   }, []);
   
   function fetchProducts(){
-    axios.get("http://localhost:8080/api/products").then(res=>setProducts(res.data));
+    axios.get("https://athul-colors-backend-hc6a.vercel.app/api/products").then(res=>setProducts(res.data));
   }
 
   useEffect(()=>{
@@ -41,7 +41,7 @@ export default function AdminPage() {
   const handleCreateProduct = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post("http://localhost:8080/api/products", { name: newProduct });
+      const { data } = await axios.post("https://athul-colors-backend-hc6a.vercel.app/api/products", { name: newProduct });
       setProducts(prev => [...prev, data]);
       setNewProduct("");
       toast.success("Product added!");
@@ -60,7 +60,7 @@ export default function AdminPage() {
     try {
       // Find the product object you want to delete
       const toDelete = products.find(p => p.name === deleteProduct);   
-      await axios.delete(`http://localhost:8080/api/products/${toDelete._id}`);
+      await axios.delete(`https://athul-colors-backend-hc6a.vercel.app/api/products/${toDelete._id}`);
       toast.success("Product deleted successfully!")
       // Ideally re-fetch or update products state here
       fetchProducts();
@@ -72,8 +72,8 @@ export default function AdminPage() {
   
   const handleDelete = async (id, id1) => {
     try {
-      await axios.delete(`http://localhost:8080/api/order/${id}`);
-      await axios.delete(`http://localhost:8080/api/user/${id1}`);
+      await axios.delete(`https://athul-colors-backend-hc6a.vercel.app/api/order/${id}`);
+      await axios.delete(`https://athul-colors-backend-hc6a.vercel.app/api/user/${id1}`);
       toast.success("Deleted the order successfully!");
       setData(data.filter(item => item._id !== id));
     } catch (err) {

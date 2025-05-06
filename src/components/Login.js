@@ -16,7 +16,7 @@ export default function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:8080/api/login", credentials);
+      const response = await axios.post("https://athul-colors-backend-hc6a.vercel.app/api/login", credentials);
       toast.success("Login Successful!");
       const {id, isAdmin} = response.data.user;
       if(isAdmin) {
