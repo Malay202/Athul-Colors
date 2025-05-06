@@ -41,15 +41,19 @@ export default function AdminPage() {
   const handleCreateProduct = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:8080/api/products", { name: newProduct });
-      toast.success("Product added successfully!")
-      // Ideally re-fetch or update products state here
-      fetchProducts();
-      setNewProduct("")
+      const { data } = await axios.post("http://localhost:8080/api/products", { name: newProduct });
+      setProducts(prev => [...prev, data]);
+      setNewProduct("");
+      toast.success("Product added!");
     } catch (err) {
-      console.error(err);
+      console.log(err);
+      if (err.response?.status === 409) {
+        toast.error(err.response.data.message);
+      } else {
+        toast.error("Unexpected server error.");
+      }
     }
-  };
+  };  
   
   const handleDeleteProduct = async (e) => {
     e.preventDefault();
