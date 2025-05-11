@@ -18,7 +18,7 @@ export default function OrderPage() {
   const  navigate = useNavigate();
 
   function handleGoBack(){
-    navigate("/company-website-reactjs");
+    navigate("/");
   }
 
   // Fetch orders when component mounts or when id changes

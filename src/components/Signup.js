@@ -14,7 +14,7 @@ export default function SignUp() {
   };
 
   function handleGoBack(){
-    navigate("/company-website-reactjs");
+    navigate("/");
   }
 
   const handleSubmit = async (e) => {

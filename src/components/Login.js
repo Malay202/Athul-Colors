@@ -31,7 +31,7 @@ export default function Login() {
   };
 
   const handleGoBack = () => {
-    navigate("/company-website-reactjs");
+    navigate("/");
   };
 
   return (

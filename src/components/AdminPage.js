@@ -12,7 +12,7 @@ export default function AdminPage() {
   const [newProduct, setNewProduct] = useState("");
 
   const handleGoBack = ()=>{
-    navigate("/company-website-reactjs");
+    navigate("/");
   }
 
   useEffect(() => {
