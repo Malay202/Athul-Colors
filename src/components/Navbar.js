@@ -1,9 +1,18 @@
 // components/Navbar.js
 import React, { useEffect } from 'react';
 import { Link as ScrollLink } from 'react-scroll';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 
 function Navbar() {
+  const navigate = useNavigate();
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
+    navigate("/")
+    window.location.reload(); // Simple reload to update state
+  };
   useEffect(() => {
     const handleScroll = () => {
       const gotop = document.querySelector('.gotop');
@@ -96,16 +105,33 @@ function Navbar() {
                 Contact
               </ScrollLink>
             </li>
-            <li>
-              <RouterLink onClick={openBar} to="/login">
-                Login
-              </RouterLink>
-            </li>
-            <li>
-              <RouterLink onClick={openBar} to="/signup">
-                Sign Up
-              </RouterLink>
-            </li>
+            {user ? (
+              <>
+                <li>
+                  <RouterLink onClick={openBar} to={`/Order/${user.id || user._id}`} style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+                    <span>🛒</span> Cart
+                  </RouterLink>
+                </li>
+                <li>
+                  <span onClick={() => { openBar(); handleLogout() }} style={{ cursor: 'pointer', color: '#fff', fontWeight: 'bold' }}>
+                    Logout
+                  </span>
+                </li>
+              </>
+            ) : (
+              <>
+                <li>
+                  <RouterLink onClick={openBar} to="/login">
+                    Login
+                  </RouterLink>
+                </li>
+                <li>
+                  <RouterLink onClick={openBar} to="/signup">
+                    Sign Up
+                  </RouterLink>
+                </li>
+              </>
+            )}
           </ul>
           <div className="button" onClick={openBar}>
             <div className="burger"></div>

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
+import { API_URL } from "../config";
 import axios from "axios";
-import { toast} from "react-toastify";
+import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import "../assets/login.css";
 
@@ -16,17 +17,23 @@ export default function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("https://athul-colors-backend-hc6a.vercel.app/api/login", credentials);
+      const response = await axios.post(`${API_URL}/login`, credentials);
       toast.success("Login Successful!");
-      const {id, isAdmin} = response.data.user;
-      if(isAdmin) {
+      const { id, isAdmin } = response.data.user;
+      localStorage.setItem("user", JSON.stringify(response.data.user));
+      localStorage.setItem("token", response.data.token);
+      if (isAdmin) {
         navigate("/AdminPage")
       }
-      else{
-        navigate(`/Order/${id}`)
+      else {
+        navigate("/")
       }
     } catch (error) {
-      toast.error("Login failed. Please try again.");
+      if (error.response && error.response.data) {
+        toast.error(error.response.data.message || "Login failed");
+      } else {
+        toast.error("Login failed. Please try again.");
+      }
     }
   };
 
@@ -40,26 +47,26 @@ export default function Login() {
         <h2>Login</h2>
         <div className="form-group">
           <label htmlFor="email">Email Address:</label>
-          <input 
-            type="email" 
-            name="email" 
-            id="email" 
-            value={credentials.email} 
-            onChange={handleChange} 
-            placeholder="Enter your email" 
-            required 
+          <input
+            type="email"
+            name="email"
+            id="email"
+            value={credentials.email}
+            onChange={handleChange}
+            placeholder="Enter your email"
+            required
           />
         </div>
         <div className="form-group">
           <label htmlFor="password">Password:</label>
-          <input 
-            type="password" 
-            name="password" 
-            id="password" 
-            value={credentials.password} 
-            onChange={handleChange} 
-            placeholder="Enter your password" 
-            required 
+          <input
+            type="password"
+            name="password"
+            id="password"
+            value={credentials.password}
+            onChange={handleChange}
+            placeholder="Enter your password"
+            required
           />
         </div>
         <button type="submit" className="login-button">Login</button>

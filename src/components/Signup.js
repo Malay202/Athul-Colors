@@ -1,11 +1,12 @@
 import React, { useState } from "react";
+import { API_URL } from "../config";
 import axios from "axios";
 import { toast } from "react-toastify";
 import "../assets/login.css"; // Reusing Login.css for both Login and SignUp forms
-import {useNavigate} from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 export default function SignUp() {
-  const [formData, setFormData] = useState({ userName: "", email: "", password: "" });
+  const [formData, setFormData] = useState({ userName: "", email: "", password: "", phoneNumber: "" });
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -13,22 +14,28 @@ export default function SignUp() {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  function handleGoBack(){
+  function handleGoBack() {
     navigate("/");
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("https://athul-colors-backend-hc6a.vercel.app/api/signup", formData);
+      const response = await axios.post(`${API_URL}/signup`, formData);
       console.log(response);
       toast.success("Signup Success!")
       const orderId = response.data.user._id;
+      localStorage.setItem("user", JSON.stringify(response.data.user));
+      localStorage.setItem("token", response.data.token);
 
-      navigate(`/Order/${orderId}`)
+      navigate("/verify")
     } catch (error) {
       console.log(error)
-      toast.error("Signup Failed. Please try again.")
+      if (error.response && error.response.data) {
+        toast.error(error.response.data.message || error.response.data || "Signup Failed");
+      } else {
+        toast.error("Signup Failed. Please try again.")
+      }
     }
   };
 
@@ -38,38 +45,49 @@ export default function SignUp() {
         <h2>Sign Up</h2>
         <div className="form-group">
           <label htmlFor="userName">Username:</label>
-          <input 
-            type="text" 
-            name="userName" 
-            id="userName" 
-            placeholder="Enter your username" 
-            value={formData.userName} 
-            onChange={handleChange} 
-            required 
+          <input
+            type="text"
+            name="userName"
+            id="userName"
+            placeholder="Enter your username"
+            value={formData.userName}
+            onChange={handleChange}
+            required
           />
         </div>
         <div className="form-group">
           <label htmlFor="email">Email Address:</label>
-          <input 
-            type="email" 
-            name="email" 
-            id="email" 
-            placeholder="Enter your email" 
-            value={formData.email} 
-            onChange={handleChange} 
-            required 
+          <input
+            type="email"
+            name="email"
+            id="email"
+            placeholder="Enter your email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="phoneNumber">Phone Number:</label>
+          <input
+            type="tel"
+            name="phoneNumber"
+            id="phoneNumber"
+            placeholder="Enter your phone number"
+            value={formData.phoneNumber}
+            onChange={handleChange}
           />
         </div>
         <div className="form-group">
           <label htmlFor="password">Password:</label>
-          <input 
-            type="password" 
-            name="password" 
-            id="password" 
-            placeholder="Enter your password" 
-            value={formData.password} 
-            onChange={handleChange} 
-            required 
+          <input
+            type="password"
+            name="password"
+            id="password"
+            placeholder="Enter your password"
+            value={formData.password}
+            onChange={handleChange}
+            required
           />
         </div>
         <button type="submit" className="login-button">Sign Up</button>

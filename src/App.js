@@ -10,6 +10,7 @@ import Login from "./components/Login";
 import SignUp from "./components/Signup";
 import AdminPage from "./components/AdminPage";
 import OrderPage from "./components/OrderPage";
+import VerificationPage from "./components/VerificationPage";
 
 function Homepage() {
   return (
@@ -31,6 +32,7 @@ function App() {
         <Route path="/SignUp" element={<SignUp />} />
         <Route path="/AdminPage" element={<AdminPage />} />
         <Route path="/Order/:id" element={<OrderPage />} />
+        <Route path="/verify" element={<VerificationPage />} />
       </Routes>
       {/* Add ToastContainer here so it works across the app */}
       <ToastContainer
