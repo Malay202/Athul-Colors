@@ -552,7 +552,9 @@ ul li a {
     width: 100%;
   }
   .row {
-    display: inline-block;
+    display: flex;
+    justify-content: space-between; /* Space out Logo and Burger */
+    align-items: center; /* Vertically align them */
   }
 }
 

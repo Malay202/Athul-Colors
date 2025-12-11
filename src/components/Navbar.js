@@ -2,6 +2,7 @@
 import React, { useEffect } from 'react';
 import { Link as ScrollLink } from 'react-scroll';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import logo from '../assets/ac_logo.jpg';
 
 function Navbar() {
   const navigate = useNavigate();
@@ -51,8 +52,18 @@ function Navbar() {
               smooth={true}
               duration={1000}
               to="headerbg"
-              style={{ cursor: 'pointer' }}
+              style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '12px' }}
             >
+              <img
+                src={logo}
+                alt="AC Logo"
+                style={{
+                  height: '45px',
+                  width: 'auto',
+                  borderRadius: '50%',
+                  border: '2px solid rgba(255,255,255,0.2)'
+                }}
+              />
               Athul Colors
             </ScrollLink>
           </h1>
@@ -107,17 +118,19 @@ function Navbar() {
             </li>
             {user ? (
               <>
-                <li>
-                  {user.isAdmin ? (
-                    <RouterLink onClick={openBar} to="/AdminPage" style={{ fontWeight: 'bold', color: '#0ea5e9' }}>
-                      Admin
+                {user.isAdmin ? (
+                  <li>
+                    <RouterLink onClick={openBar} to="/AdminPage" style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', fontWeight: 'bold', color: '#0ea5e9', verticalAlign: 'middle' }}>
+                      <span>⚙️</span> Admin
                     </RouterLink>
-                  ) : (
-                    <RouterLink onClick={openBar} to={`/Order/${user.id || user._id}`} style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+                  </li>
+                ) : (
+                  <li>
+                    <RouterLink onClick={openBar} to={`/Order/${user.id || user._id}`} style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', verticalAlign: 'middle' }}>
                       <span>🛒</span> Cart
                     </RouterLink>
-                  )}
-                </li>
+                  </li>
+                )}
                 <li>
                   <span onClick={() => { openBar(); handleLogout() }} style={{ cursor: 'pointer', color: '#fff', fontWeight: 'bold' }}>
                     Logout
@@ -144,9 +157,9 @@ function Navbar() {
             <div className="burger"></div>
             <div className="burger"></div>
           </div>
-        </div>
-      </div>
-    </nav>
+        </div >
+      </div >
+    </nav >
   );
 }
 

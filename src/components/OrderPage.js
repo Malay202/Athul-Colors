@@ -185,7 +185,7 @@ export default function OrderPage() {
         <div style={{ display: 'flex', gap: '10px' }}>
           {isAdmin && (
             <button onClick={() => navigate('/admin')} className="logout-button" style={{ borderColor: '#0ea5e9', color: '#0ea5e9' }}>
-              Admin
+              Admin Dashboard
             </button>
           )}
           <button onClick={handleHome} className="logout-button">Home</button>
