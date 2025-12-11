@@ -10,31 +10,31 @@ function Footer() {
           <div className="side1">
             <div className="row">
               <div className="col-md-3">
-                <h1 className="logo">Athul Colors</h1>
+                <h1 className="logo">Athul Colours</h1>
                 <p className="footer-text">
                   Lorem ipsum Here are thriteen health benefits of apples Lorem
-        
+
                 </p>
               </div>
               <div className="col-md-3">
                 <p className="footer-title">Important Link</p>
                 <ul>
                   <li>
-                  <Link   
-                         spy={true}
-                         smooth={true}
-                         duration={1000}
-                         to="headerbg"
-                  > Home </Link>
+                    <Link
+                      spy={true}
+                      smooth={true}
+                      duration={1000}
+                      to="headerbg"
+                    > Home </Link>
                   </li>
                   <li>
-                  <Link to="about-scroll" spy={true} smooth={true} duration={1000}>About Us  </Link>
+                    <Link to="about-scroll" spy={true} smooth={true} duration={1000}>About Us  </Link>
                   </li>
                   <li>
-                  <Link to="services" spy={true} smooth={true} duration={1000} > Products </Link>
+                    <Link to="services" spy={true} smooth={true} duration={1000} > Products </Link>
                   </li>
                   <li>
-                  <Link to="contact" spy={true} smooth={true} duration={1000}> Contact  </Link>
+                    <Link to="contact" spy={true} smooth={true} duration={1000}> Contact  </Link>
                   </li>
                 </ul>
               </div>
