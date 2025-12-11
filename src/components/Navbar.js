@@ -108,9 +108,15 @@ function Navbar() {
             {user ? (
               <>
                 <li>
-                  <RouterLink onClick={openBar} to={`/Order/${user.id || user._id}`} style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-                    <span>🛒</span> Cart
-                  </RouterLink>
+                  {user.isAdmin ? (
+                    <RouterLink onClick={openBar} to="/AdminPage" style={{ fontWeight: 'bold', color: '#0ea5e9' }}>
+                      Admin
+                    </RouterLink>
+                  ) : (
+                    <RouterLink onClick={openBar} to={`/Order/${user.id || user._id}`} style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+                      <span>🛒</span> Cart
+                    </RouterLink>
+                  )}
                 </li>
                 <li>
                   <span onClick={() => { openBar(); handleLogout() }} style={{ cursor: 'pointer', color: '#fff', fontWeight: 'bold' }}>
