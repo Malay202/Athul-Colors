@@ -2,165 +2,280 @@
 body {
   margin: 0;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  background-color: #F8FAFC;
-  /* Neutral light gray background */
-  color: #1E293B;
-  /* Slate-800 for high contrast text */
+  background-color: #F5F7FA;
+  /* Light gray background */
+  color: #1F2937;
+  /* Dark gray text */
+  min-height: 100vh;
 }
 
-/* Container styling */
-.table-container {
-  max-width: 1200px;
-  margin: 20px auto;
-  padding: 30px;
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  border: 1px solid #E2E8F0;
-}
-
-/* Heading */
-.table-heading {
-  color: #0F172A;
-  /* Slate-900 */
-  margin-bottom: 0;
-  font-size: 1.5rem;
-  /* 24px */
-  font-weight: 600;
-  /* Regular semi-bold, not all caps */
-  letter-spacing: -0.025em;
-  text-transform: none;
-  text-decoration: none;
-}
-
-/* Table styling */
-.order-table {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-  margin-top: 20px;
-}
-
-/* Table header */
-.order-table thead tr {
-  background-color: #F1F5F9;
-  /* Slate-100 */
-}
-
-.order-table th {
-  padding: 16px;
-  text-align: left;
-  font-weight: 600;
-  font-size: 0.875rem;
-  /* 14px */
-  color: #475569;
-  /* Slate-600 */
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  border-bottom: 2px solid #E2E8F0;
-  position: sticky;
+/* 1. Page Header (Fixed Top) */
+.header-section {
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
+  height: 64px;
+  background: white;
+  border-bottom: 1px solid #E5E7EB;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 32px;
+  z-index: 100;
+  box-sizing: border-box;
 }
 
-/* Table cells */
-.order-table td {
-  padding: 16px;
-  vertical-align: middle;
-  border-bottom: 1px solid #E2E8F0;
-  font-size: 0.95rem;
-  /* 15px */
-  color: #334155;
-  /* Slate-700 */
+.header-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #111827;
+  margin: 0;
 }
 
-/* Alternating rows */
-.order-table .even-row {
-  background-color: #FFFFFF;
+.header-buttons {
+  display: flex;
+  gap: 16px;
 }
 
-.order-table .odd-row {
-  background-color: #F8FAFC;
-  /* Very subtle alternating color */
-}
-
-.order-table tbody tr:hover {
-  background-color: #F1F5F9;
-  /* Hover state */
-}
-
-/* Action button */
-.delete-button {
-  background-color: #10B981;
-  /* Emerald-500 (Professional Green) */
-  color: white;
-  border: none;
+.header-buttons button {
   padding: 8px 16px;
   border-radius: 6px;
   font-weight: 500;
   font-size: 0.875rem;
+  transition: all 0.2s;
   cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.btn-home {
+  background: transparent;
+  color: #4B5563;
+  border: 1px solid transparent;
+}
+
+.btn-home:hover {
+  background: #F3F4F6;
+  color: #1F2937;
+}
+
+.btn-logout {
+  background: transparent;
+  color: #EF4444;
+  border: 1px solid #FECACA;
+}
+
+.btn-logout:hover {
+  background: #FEF2F2;
+  border-color: #EF4444;
+}
+
+/* Main Layout Wrapper */
+.main-wrapper {
+  max-width: 1200px;
+  margin: 88px auto 40px;
+  /* Top margin accounts for fixed header + spacing */
+  padding: 0 24px;
+}
+
+/* 2. Management Cards Section (Top) */
+.product-management-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.admin-card {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 24px;
+  border: 1px solid #E5E7EB;
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-card h3 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 1.125rem;
+  color: #111827;
+  font-weight: 600;
+  border-bottom: 1px solid #F3F4F6;
+  padding-bottom: 12px;
+}
+
+/* 3. Orders Section */
+.orders-section {
+  margin-top: 32px;
+}
+
+.section-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 16px;
+}
+
+.table-wrapper {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: 1px solid #E5E7EB;
+  overflow: hidden;
+  /* For rounded corners */
+}
+
+.order-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.order-table thead {
+  background-color: #F9FAFB;
+  border-bottom: 1px solid #E5E7EB;
+}
+
+.order-table th {
+  padding: 12px 24px;
+  text-align: left;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #6B7280;
+  letter-spacing: 0.05em;
+}
+
+.order-table td {
+  padding: 16px 24px;
+  color: #374151;
+  font-size: 0.875rem;
+  border-bottom: 1px solid #F3F4F6;
+  vertical-align: middle;
+}
+
+.order-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.order-table tbody tr.even-row {
+  background-color: white;
+}
+
+.order-table tbody tr.odd-row {
+  background-color: #F9FAFB;
+}
+
+.order-table tbody tr:hover {
+  background-color: #F3F4F6;
+}
+
+/* 4. Pagination */
+.pagination-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 24px;
+  gap: 12px;
+}
+
+.pagination-controls {
+  display: flex;
+  gap: 8px;
+}
+
+.page-btn {
+  height: 36px;
+  min-width: 36px;
+  padding: 0 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  border: 1px solid #D1D5DB;
+  border-radius: 6px;
+  color: #374151;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.page-btn:hover:not(:disabled) {
+  background-color: #F3F4F6;
+  border-color: #9CA3AF;
+}
+
+.page-btn.active {
+  background-color: #3B82F6;
+  /* Primary Blue */
+  color: white;
+  border-color: #3B82F6;
+}
+
+.page-btn:disabled {
+  background-color: #F3F4F6;
+  color: #9CA3AF;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.pagination-info {
+  font-size: 0.875rem;
+  color: #6B7280;
+}
+
+/* Action Buttons */
+.delete-button {
+  background-color: #10B981;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
 }
 
 .delete-button:hover {
   background-color: #059669;
-  /* Emerald-600 */
-  transform: translateY(-1px);
 }
 
-/* No orders message */
-.no-orders {
-  text-align: center;
-  color: #64748B;
-  padding: 40px;
-  font-size: 1rem;
-  background: #F8FAFC;
-  border-radius: 8px;
-  border: 1px dashed #E2E8F0;
-}
-
-/* Product Management Section Grid (Managed inline but these help responsiveness) */
-.product-management-section {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 32px;
-}
-
-@media (max-width: 768px) {
-  .product-management-section {
-    grid-template-columns: 1fr !important;
-  }
-
-  .table-container {
-    padding: 15px;
-  }
-}
-
-/* Header Buttons (Home/Logout) */
-.header-section button {
-  font-family: 'Inter', sans-serif;
-  transition: all 0.2s ease;
-}
-
-.header-section button:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-}
-
-/* Form Styles */
+/* Form Elements Consistency */
 input[type="text"],
 input[type="email"],
 select {
-  font-family: 'Inter', sans-serif;
-  transition: border-color 0.15s ease-in-out;
+  padding: 8px 12px;
+  border: 1px solid #D1D5DB;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-input[type="text"]:focus,
-input[type="email"]:focus,
-select:focus {
-  outline: none;
-  border-color: #4F46E5 !important;
-  /* Indigo-600 highlight */
-  box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.1);
+/* Responsive */
+@media (max-width: 1024px) {
+  .product-management-section {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .header-section {
+    padding: 0 16px;
+  }
+
+  .header-title {
+    font-size: 1.25rem;
+  }
+
+  .main-wrapper {
+    padding: 0 16px;
+  }
+
+  .order-table th,
+  .order-table td {
+    padding: 12px 16px;
+  }
 }

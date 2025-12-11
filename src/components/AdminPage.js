@@ -97,233 +97,192 @@ export default function AdminPage() {
     }
   };
 
+
+  // --- Pagination Logic ---
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 6;
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentOrders = data.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(data.length / itemsPerPage);
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) setCurrentPage(prev => prev + 1);
+  };
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) setCurrentPage(prev => prev - 1);
+  };
+
   return (
     <>
-      <div className="table-container">
-        <h2 className="table-heading">Order Information</h2>
-        {data.length > 0 ? (
-          <table className="order-table">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>Order Info</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {data.map((item, index) => (
-                <tr key={item._id} className={index % 2 === 0 ? "even-row" : "odd-row"}>
-                  <td>{item.userName}</td>
-                  <td>{item.email}</td>
-                  <td>{item.phoneNumber || "N/A"}</td>
-                  <td>
-                    {Array.isArray(item.orders) ? (
-                      <ul>
-                        {item.orders.map((order, idx) => (
-                          <li key={idx} style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '5px' }}>
-                            <span
-                              style={{
-                                display: 'inline-block',
-                                width: '20px',
-                                height: '20px',
-                                borderRadius: '50%',
-                                backgroundColor: order.productName.startsWith('#') ? order.productName : '#ccc',
-                                border: '1px solid #ddd'
-                              }}
-                            ></span>
-                            <span style={{ fontFamily: 'monospace' }}>{order.productName}</span>
-                            <span style={{ fontWeight: 'bold' }}>x{order.quantity}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    ) : (
-                      <span>{JSON.stringify(item.orders)}</span> // Handle other cases
-                    )}
-                  </td>
-                  <td className="action-cell">
-                    <button className="delete-button" onClick={() => handleDelete(item._id, item.userId)}>
-                      Mark Complete
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        ) : (
-          <p className="no-orders">No orders available</p>
-        )}
+      {/* 1. Header Section */}
+      <div className="header-section">
+        <h1 className="header-title">Order Management</h1>
+        <div className="header-buttons">
+          <button onClick={handleHome} className="btn-home">Home</button>
+          <button onClick={handleLogout} className="btn-logout">Sign Out</button>
+        </div>
       </div>
 
-      <div className="header-section" style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', justifyContent: 'flex-end', padding: '0 20px', gap: '10px' }}>
-        <button onClick={handleHome} style={{
-          background: '#fff',
-          border: '1px solid #e2e8f0',
-          padding: '8px 16px',
-          borderRadius: '6px',
-          cursor: 'pointer',
-          fontWeight: 500
-        }}>Home</button>
-        <button onClick={handleLogout} style={{
-          background: '#fff',
-          border: '1px solid #dc2626',
-          color: '#dc2626',
-          padding: '8px 16px',
-          borderRadius: '6px',
-          cursor: 'pointer',
-          fontWeight: 500
-        }}>Sign Out</button>
-      </div>
+      <div className="main-wrapper">
 
-      {/* Product Management Section */}
-      <div className="product-management-section" style={{
-        maxWidth: '1200px',
-        margin: '40px auto',
-        padding: '0 20px',
-        display: 'grid',
-        gridTemplateColumns: '1fr 1fr',
-        gap: '40px'
-      }}>
+        {/* 2. Management Cards Section (Top) */}
+        <div className="product-management-section">
 
-        {/* Left Column: Create Product */}
-        <div className="admin-card" style={{
-          background: '#fff',
-          padding: '30px',
-          borderRadius: '8px',
-          boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
-        }}>
-          <h3 style={{ marginTop: 0, color: '#0f172a' }}>Add New Pigment</h3>
-          <form onSubmit={handleCreateProduct} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-
-            <div>
-              <label style={{ display: 'block', marginBottom: '8px', fontWeight: 'bold', color: '#475569' }}>Pigment Name</label>
-              <input
-                type="text"
-                placeholder="e.g. Royal Blue"
-                value={newProduct.name}
-                onChange={e => setNewProduct({ ...newProduct, name: e.target.value })}
-                required
-                style={{
-                  width: '100%',
-                  padding: '12px',
-                  border: '1px solid #e2e8f0',
-                  borderRadius: '6px',
-                  boxSizing: 'border-box'
-                }}
-              />
-            </div>
-
-            <div>
-              <label style={{ display: 'block', marginBottom: '8px', fontWeight: 'bold', color: '#475569' }}>Color Hex Code</label>
-              <div style={{ display: 'flex', gap: '10px' }}>
-                <input
-                  type="color"
-                  value={newProduct.hex}
-                  onChange={e => setNewProduct({ ...newProduct, hex: e.target.value })}
-                  style={{ width: '60px', height: '40px', padding: 0, border: 'none', cursor: 'pointer', flexShrink: 0 }}
-                />
+          {/* Card 1: Add New Pigment */}
+          <div className="admin-card">
+            <h3>Add New Pigment</h3>
+            <form onSubmit={handleCreateProduct} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              <div>
+                <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.875rem', fontWeight: 500 }}>Pigment Name</label>
                 <input
                   type="text"
-                  value={newProduct.hex}
-                  onChange={e => setNewProduct({ ...newProduct, hex: e.target.value })}
-                  pattern="^#+([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$"
-                  style={{
-                    flexGrow: 1,
-                    padding: '8px',
-                    border: '1px solid #e2e8f0',
-                    borderRadius: '6px',
-                    fontFamily: 'monospace'
-                  }}
+                  placeholder="e.g. Royal Blue"
+                  value={newProduct.name}
+                  onChange={e => setNewProduct({ ...newProduct, name: e.target.value })}
+                  required
                 />
               </div>
-            </div>
-
-            <button type="submit" style={{
-              background: '#0f172a',
-              color: '#fff',
-              border: 'none',
-              padding: '12px',
-              borderRadius: '6px',
-              fontSize: '1rem',
-              fontWeight: '600',
-              cursor: 'pointer'
-            }}>Add to Inventory</button>
-          </form>
-        </div>
-
-        {/* Right Column: Existing Products & Delete */}
-        <div className="admin-card" style={{
-          background: '#fff',
-          padding: '30px',
-          borderRadius: '8px',
-          boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-          height: 'fit-content'
-        }}>
-          <h3 style={{ marginTop: 0, color: '#0f172a' }}>Inventory Management</h3>
-
-          <div style={{ marginBottom: '30px' }}>
-            <label style={{ display: 'block', marginBottom: '8px', fontWeight: 'bold', color: '#475569' }}>Delete Product</label>
-            <form onSubmit={handleDeleteProduct} style={{ display: 'flex', gap: '10px' }}>
-              <select
-                value={deleteProduct}
-                onChange={e => setDeleteProduct(e.target.value)}
-                required
-                style={{ flexGrow: 1, padding: '10px', borderRadius: '6px', border: '1px solid #e2e8f0' }}
-              >
-                <option value="">Select a product to remove...</option>
-                {products.map(p => (
-                  <option key={p._id} value={p.name}>{p.name}</option>
-                ))}
-              </select>
+              <div>
+                <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.875rem', fontWeight: 500 }}>Color Hex Code</label>
+                <div style={{ display: 'flex', gap: '10px' }}>
+                  <input
+                    type="color"
+                    value={newProduct.hex}
+                    onChange={e => setNewProduct({ ...newProduct, hex: e.target.value })}
+                    style={{ width: '40px', height: '38px', padding: 0, border: 'none', cursor: 'pointer', flexShrink: 0 }}
+                  />
+                  <input
+                    type="text"
+                    value={newProduct.hex}
+                    onChange={e => setNewProduct({ ...newProduct, hex: e.target.value })}
+                    pattern="^#+([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$"
+                    style={{ flexGrow: 1, fontFamily: 'monospace' }}
+                  />
+                </div>
+              </div>
               <button type="submit" style={{
-                background: '#dc2626',
-                color: '#fff',
-                border: 'none',
-                padding: '10px 20px',
-                borderRadius: '6px',
-                fontWeight: '600',
-                cursor: 'pointer'
-              }}>Delete</button>
+                background: '#0F172A', color: 'white', padding: '10px', borderRadius: '6px', border: 'none', fontWeight: 500, marginTop: '8px'
+              }}>Add to Inventory</button>
             </form>
           </div>
 
-          <h4 style={{ marginBottom: '10px', color: '#475569' }}>Current Stock List</h4>
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))',
-            gap: '15px',
-            maxHeight: '400px',
-            overflowY: 'auto',
-            paddingRight: '5px'
-          }}>
-            {products.map(p => (
-              <div key={p._id} style={{
-                border: '1px solid #e2e8f0',
-                borderRadius: '6px',
-                padding: '10px',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                gap: '8px'
-              }}>
-                <div style={{
-                  width: '40px',
-                  height: '40px',
-                  borderRadius: '50%',
+          {/* Card 2: Inventory Management */}
+          <div className="admin-card">
+            <h3>Inventory Management</h3>
+            <div style={{ marginBottom: '24px' }}>
+              <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.875rem', fontWeight: 500 }}>Delete Product</label>
+              <form onSubmit={handleDeleteProduct} style={{ display: 'flex', gap: '10px' }}>
+                <select
+                  value={deleteProduct}
+                  onChange={e => setDeleteProduct(e.target.value)}
+                  required
+                >
+                  <option value="">Select product...</option>
+                  {products.map(p => (
+                    <option key={p._id} value={p.name}>{p.name}</option>
+                  ))}
+                </select>
+                <button type="submit" style={{
+                  background: '#EF4444', color: 'white', border: 'none', padding: '0 16px', borderRadius: '6px', fontWeight: 500
+                }}>Delete</button>
+              </form>
+            </div>
+
+            <h4 style={{ margin: '0 0 12px 0', fontSize: '0.875rem', color: '#6B7280' }}>Current Stock</h4>
+            <div style={{
+              display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(60px, 1fr))', gap: '12px',
+              maxHeight: '120px', overflowY: 'auto', paddingRight: '4px'
+            }}>
+              {products.map(p => (
+                <div key={p._id} title={p.name} style={{
+                  height: '40px', borderRadius: '6px',
                   background: p.hex || (p.name.startsWith('#') ? p.name : '#ccc'),
-                  border: '1px solid #ddd'
+                  border: '1px solid #E5E7EB', cursor: 'help'
                 }}></div>
-                <span style={{ fontSize: '0.85rem', textAlign: 'center', fontWeight: '500' }}>{p.name}</span>
-                {p.hex && <span style={{ fontSize: '0.75rem', color: '#94a3b8', fontFamily: 'monospace' }}>{p.hex}</span>}
-              </div>
-            ))}
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* 3. Orders Section */}
+        <div className="orders-section">
+          <h2 className="section-title">Recent Orders</h2>
+          <div className="table-wrapper">
+            {data.length > 0 ? (
+              <table className="order-table">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Order Info</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {currentOrders.map((item, index) => (
+                    <tr key={item._id} className={index % 2 === 0 ? "even-row" : "odd-row"}>
+                      <td>{item.userName}</td>
+                      <td>{item.email}</td>
+                      <td>{item.phoneNumber || "N/A"}</td>
+                      <td>
+                        {Array.isArray(item.orders) && item.orders.length > 0 ? (
+                          <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                            {item.orders.map((order, idx) => (
+                              <span key={idx} style={{
+                                background: '#F3F4F6', padding: '4px 8px', borderRadius: '4px', fontSize: '0.8rem',
+                                display: 'flex', alignItems: 'center', gap: '6px', border: '1px solid #E5E7EB'
+                              }}>
+                                <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: order.productName.startsWith('#') ? order.productName : '#9CA3AF' }}></span>
+                                {order.productName} <strong style={{ marginLeft: '4px' }}>x{order.quantity}</strong>
+                              </span>
+                            ))}
+                          </div>
+                        ) : (
+                          <span style={{ color: '#9CA3AF' }}>No items</span>
+                        )}
+                      </td>
+                      <td>
+                        <button className="delete-button" onClick={() => handleDelete(item._id, item.userId)}>
+                          Mark Complete
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <div style={{ padding: '48px', textAlign: 'center', color: '#6B7280' }}>No orders found.</div>
+            )}
           </div>
 
+          {/* 4. Pagination */}
+          {data.length > 0 && (
+            <div className="pagination-container">
+              <div className="pagination-controls">
+                <button className="page-btn" onClick={handlePrevPage} disabled={currentPage === 1}>Prev</button>
+                {[...Array(totalPages)].map((_, i) => (
+                  <button
+                    key={i + 1}
+                    className={`page-btn ${currentPage === i + 1 ? 'active' : ''}`}
+                    onClick={() => setCurrentPage(i + 1)}
+                  >
+                    {i + 1}
+                  </button>
+                ))}
+                <button className="page-btn" onClick={handleNextPage} disabled={currentPage === totalPages}>Next</button>
+              </div>
+              <div className="pagination-info">
+                Showing {indexOfFirstItem + 1}-{Math.min(indexOfLastItem, data.length)} of {data.length} orders
+              </div>
+            </div>
+          )}
         </div>
+
       </div>
-
-
     </>
   );
 }

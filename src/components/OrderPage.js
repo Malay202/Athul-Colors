@@ -9,17 +9,41 @@ export default function OrderPage() {
   const { id } = useParams();
   const navigate = useNavigate();
 
+  /* State */
   const [orders, setOrders] = useState([]);
   const [products, setProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(true);
+  const [showModal, setShowModal] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
 
-  // Fetch orders
+  // ... (useEffects)
+
+  // ...
+
+  const handleConfirmPurchase = async () => {
+    try {
+      await axios.post(`${API_URL}/checkout/${id}`, {
+        items: consolidatedOrders
+      });
+
+      setShowModal(false);
+      setOrders([]); // Clear local cart
+      setShowSuccess(true); // Show success screen
+    } catch (err) {
+      console.error("Checkout failed:", err);
+      toast.error("Failed to process checkout. Please try again.");
+    }
+  };
+
+
   useEffect(() => {
     axios
       .get(`${API_URL}/order/${id}`)
       .then((response) => {
+        // Consolidate orders on fetch if needed, or just set raw
+        // We will handle consolidation in the render or a helper
         setOrders(response.data.orders || []);
         setLoading(false);
       })
@@ -63,18 +87,7 @@ export default function OrderPage() {
     axios
       .post(`${API_URL}/order/${id}`, payload)
       .then((response) => {
-        setOrders((prevOrders) => {
-          // Check if color already exists
-          const index = prevOrders.findIndex(
-            (order) => order.productName === selectedProduct.name
-          );
-          if (index > -1) {
-            const updatedOrders = [...prevOrders];
-            updatedOrders[index].quantity += Number(quantity);
-            return updatedOrders;
-          }
-          return [...prevOrders, { productName: selectedProduct.name, quantity: Number(quantity) }];
-        });
+        setOrders(response.data.order.orders);
         toast.success("Order line created successfully.");
         setQuantity(1);
         setSelectedProduct(null);
@@ -110,8 +123,51 @@ export default function OrderPage() {
     return s.color !== '';
   };
 
+  // Consolidate orders for display
+  const consolidatedOrders = Object.values(orders.reduce((acc, order) => {
+    if (!acc[order.productName]) {
+      acc[order.productName] = {
+        productName: order.productName,
+        quantity: 0,
+        ids: [], // Keep track of all IDs for this product
+        // Keep reference to at least one ID for key
+        _id: order._id
+      };
+    }
+    acc[order.productName].quantity += Number(order.quantity);
+    acc[order.productName].ids.push(order._id);
+    return acc;
+  }, {}));
+
+  // Calculate totals
+  const totalItems = consolidatedOrders.length;
+  const totalUnits = consolidatedOrders.reduce((acc, curr) => acc + curr.quantity, 0);
+
+  const handleProceedToCheckout = () => {
+    setShowModal(true);
+  };
+
+  if (showSuccess) {
+    return (
+      <div className="userpage-container" style={{ textAlign: 'center', marginTop: '100px' }}>
+        <h2 style={{ color: '#10B981', fontSize: '2.5rem', marginBottom: '20px' }}>Order Placed!</h2>
+        <p style={{ fontSize: '1.2rem', color: '#475569', marginBottom: '40px' }}>
+          Thank you for purchasing from Athul Colours! <br />
+          We have received your order and will get back to you soon.
+        </p>
+        <button
+          onClick={() => { setShowSuccess(false); navigate(0); }}
+          className="checkout-btn"
+          style={{ margin: '0 auto', maxWidth: '250px' }}
+        >
+          Return to Dashboard
+        </button>
+      </div>
+    );
+  }
+
   return (
-    <div className="userpage-container">
+    <>
       <div className="header-section">
         <div className="title-block">
           <h2>Order Requisition</h2>
@@ -123,100 +179,157 @@ export default function OrderPage() {
         </div>
       </div>
 
-      <div className="dashboard-grid">
-        {/* Left Column: Picker */}
-        <div className="picker-card">
-          <h3>Product Configuration</h3>
-          <form onSubmit={handleCreateOrder}>
+      <div className="userpage-container">
 
-            <div className="form-group">
-              <label className="form-label">Select Pigment</label>
-              <div style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fill, minmax(60px, 1fr))',
-                gap: '10px',
-                maxHeight: '200px',
-                overflowY: 'auto',
-                border: '1px solid #e2e8f0',
-                padding: '10px',
-                borderRadius: '6px'
-              }}>
-                {products.map(p => (
-                  <div
-                    key={p._id}
-                    onClick={() => setSelectedProduct(p)}
-                    title={p.name}
-                    style={{
-                      cursor: 'pointer',
-                      border: selectedProduct?._id === p._id ? '2px solid #0f172a' : '1px solid #e2e8f0',
-                      borderRadius: '6px',
-                      overflow: 'hidden',
-                      display: 'flex',
-                      flexDirection: 'column'
+        <div className="dashboard-grid">
+          {/* Left Column: Picker */}
+          <div className="picker-card">
+            <h3>Product Configuration</h3>
+            <form onSubmit={handleCreateOrder}>
+
+              <div className="form-group">
+                <label className="form-label">Select Pigment</label>
+                <div className="pigment-grid">
+                  {products.map(p => (
+                    <div
+                      key={p._id}
+                      className={`pigment-option ${selectedProduct?._id === p._id ? 'selected' : ''}`}
+                      onClick={() => setSelectedProduct(p)}
+                      title={p.name}
+                      style={{
+                        background: p.hex || (p.name.startsWith('#') ? p.name : '#ccc')
+                      }}
+                    >
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="form-group">
+                <div className="hex-display" style={{
+                  background: selectedProduct?.hex || '#f1f5f9',
+                  color: selectedProduct ? '#ffffff' : 'inherit',
+                  textShadow: selectedProduct ? '0 1px 3px rgba(0,0,0,0.3)' : 'none'
+                }}>
+                  {selectedProduct ? `${selectedProduct.name}` : "No Product Selected"}
+                </div>
+              </div>
+
+              <div className="form-group">
+                <label className="form-label">Quantity (Units)</label>
+                <div className="quantity-wrapper">
+                  <button type="button" className="qty-btn" onClick={decrementQty}>-</button>
+                  <input
+                    type="number"
+                    className="qty-input"
+                    value={quantity}
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      if (val === '') setQuantity('');
+                      else setQuantity(Math.max(1, parseInt(val) || 1));
                     }}
-                  >
-                    <div style={{ height: '40px', background: p.hex || (p.name.startsWith('#') ? p.name : '#ccc') }}></div>
+                    onBlur={() => {
+                      if (quantity === '' || quantity < 1) setQuantity(1);
+                    }}
+                  />
+                  <button type="button" className="qty-btn" onClick={incrementQty}>+</button>
+                </div>
+              </div>
+
+              <button type="submit" className="add-btn" disabled={!selectedProduct} style={{ opacity: !selectedProduct ? 0.5 : 1, cursor: !selectedProduct ? 'not-allowed' : 'pointer' }}>
+                Add to Cart
+              </button>
+            </form>
+          </div>
+
+          {/* Right Column: List */}
+          <div className="orders-container">
+            <div className="order-header-row">
+              <span>Swatch</span>
+              <span>Product Code</span>
+              <span>Qty</span>
+              <span style={{ textAlign: 'right' }}>Action</span>
+            </div>
+            {consolidatedOrders.length > 0 ? (
+              <div className="order-list">
+                {consolidatedOrders.map((order, index) => (
+                  <div key={order._id || index} className="order-item">
+                    <div
+                      className="swatch-preview"
+                      style={{ backgroundColor: (products.find(p => p.name === order.productName)?.hex) || (isColor(order.productName) ? order.productName : '#ccc') }}
+                    ></div>
+                    <span className="product-code">{order.productName}</span>
+                    <span className="qty-badge">{order.quantity}</span>
+                    <button
+                      className="remove-link"
+                      onClick={() => {
+                        // Delete all IDs associated with this consolidated row
+                        const confirmDelete = window.confirm(`Remove all ${order.quantity} units of ${order.productName}?`);
+                        if (confirmDelete) {
+                          // Map all deletes
+                          Promise.all(order.ids.map(itemId => axios.delete(`${API_URL}/order/${id}/${itemId}`)))
+                            .then(() => {
+                              setOrders(prev => prev.filter(o => o.productName !== order.productName));
+                              toast.info("Line item removed.");
+                            })
+                            .catch(err => {
+                              console.error(err);
+                              toast.error("Failed to remove items.");
+                            });
+                        }
+                      }}
+                    >
+                      Remove
+                    </button>
                   </div>
                 ))}
               </div>
-            </div>
-
-            <div className="form-group">
-              <div className="hex-display" style={{ background: selectedProduct?.hex || '#f1f5f9' }}>
-                {selectedProduct ? `${selectedProduct.name}` : "No Product Selected"}
+            ) : (
+              <div className="empty-state">
+                <p>No line items in this requisition.</p>
+                <small>Use the configuration panel to add products.</small>
               </div>
-            </div>
-
-            <div className="form-group">
-              <label className="form-label">Quantity (Units)</label>
-              <div className="quantity-wrapper">
-                <button type="button" className="qty-btn" onClick={decrementQty}>-</button>
-                <input type="text" className="qty-input" value={quantity} readOnly />
-                <button type="button" className="qty-btn" onClick={incrementQty}>+</button>
-              </div>
-            </div>
-
-            <button type="submit" className="add-btn" disabled={!selectedProduct} style={{ opacity: !selectedProduct ? 0.5 : 1, cursor: !selectedProduct ? 'not-allowed' : 'pointer' }}>
-              Add to Manifest
-            </button>
-          </form>
-        </div>
-
-        {/* Right Column: List */}
-        <div className="orders-container">
-          <div className="order-header-row">
-            <span>Swatch</span>
-            <span>Product Code</span>
-            <span>Qty</span>
-            <span style={{ textAlign: 'right' }}>Action</span>
+            )}
           </div>
-          {orders.length > 0 ? (
-            <div className="order-list">
-              {orders.map((order, index) => (
-                <div key={order._id || index} className="order-item">
-                  <div
-                    className="swatch-preview"
-                    style={{ backgroundColor: (products.find(p => p.name === order.productName)?.hex) || (isColor(order.productName) ? order.productName : '#ccc') }}
-                  ></div>
-                  <span className="product-code">{order.productName}</span>
-                  <span className="qty-badge">{order.quantity}</span>
-                  <button
-                    className="remove-link"
-                    onClick={() => handleDelete(order._id)}
-                  >
-                    Remove
-                  </button>
+        </div>
+      </div>
+
+      {/* Sticky Footer */}
+      <div className="sticky-footer">
+        <div className="order-summary-text">
+          {totalItems} items • {totalUnits} units total
+        </div>
+        <button
+          className="checkout-btn"
+          disabled={totalItems === 0}
+          onClick={handleProceedToCheckout}
+        >
+          Proceed to Checkout
+          <svg style={{ width: '20px', height: '20px' }} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+        </button>
+      </div>
+
+      {/* Confirmation Modal */}
+      {showModal && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h3 className="modal-title">Confirm Purchase</h3>
+            <div className="summary-list">
+              {consolidatedOrders.map((order, idx) => (
+                <div key={idx} className="summary-item">
+                  <span>{order.productName}</span>
+                  <strong>{order.quantity} units</strong>
                 </div>
               ))}
             </div>
-          ) : (
-            <div className="empty-state">
-              <p>No line items in this requisition.</p>
-              <small>Use the configuration panel to add products.</small>
+
+            <div className="modal-actions">
+              <button className="cancel-btn" onClick={() => setShowModal(false)}>Cancel</button>
+              <button className="confirm-btn" onClick={handleConfirmPurchase}>Confirm Purchase</button>
             </div>
-          )}
+          </div>
         </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 }
