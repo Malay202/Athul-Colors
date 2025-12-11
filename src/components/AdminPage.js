@@ -88,12 +88,12 @@ export default function AdminPage() {
   const handleDelete = async (id, id1) => {
     try {
       await axios.delete(`${API_URL}/order/${id}`);
-      await axios.delete(`${API_URL}/user/${id1}`);
-      toast.success("Deleted the order successfully!");
+      // await axios.delete(`${API_URL}/user/${id1}`); // Do not delete the user when completing an order
+      toast.success("Order marked as complete!");
       setData(data.filter(item => item._id !== id));
     } catch (err) {
       console.error("Error deleting order:", err);
-      toast.error("Failed to delete the order.");
+      toast.error("Failed to update status.");
     }
   };
 
