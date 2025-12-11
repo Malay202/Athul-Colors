@@ -1,261 +1,166 @@
- /* Container styling */
-  .table-container {
-    padding: 10px;
-    background: linear-gradient(125deg, #6a11cb, #ffffff, #2575fc);
-    border-radius: 40px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    text-align: center;
-  }
-  
-  /* Heading */
-  .table-heading {
-    color: #333534;
-    text-decoration: underline;
-    margin-bottom: 15px;
-    font-size: 24px;
-    font-weight: bold;
-  }
-  
-  /* Table styling */
-  .order-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 18px;
-    text-align: left;
-    background-color: #ffffff;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* Table header */
-  .order-table thead tr {
-    background-color: #6a11cb;
-    color: white;
-  }
-  
-  .order-table th {
-    padding: 15px;
-    border: none;
-  }
-  
-  /* Table rows */
-  .order-table tbody tr {
-    transition: background 0.3s;
-  }
-  
-  .order-table .even-row {
-    background-color: #f0f0ff; /* Light purple */
-  }
-  
-  .order-table .odd-row {
-    background-color: #ffffff;
-  }
-  
-  /* Table cells */
-  .order-table td {
-    padding: 15px;
-    border: none;
-  }
-  
-  /* Action button */
-  .delete-button {
-    background-color: #579653;
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background 0.3s;
-  }
-  
-  .delete-button:hover {
-    background-color: #cc0000;
-  }
-  
-  /* No orders message */
-  .no-orders {
-    text-align: center;
-    color: #666;
-    font-size: 16px;
-    margin-top: 15px;
-  }
-
-/* New wrapper for heading + button */
-.header-actions {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1rem;
+/* Modern Reset & Base */
+body {
+  margin: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background-color: #F8FAFC;
+  /* Neutral light gray background */
+  color: #1E293B;
+  /* Slate-800 for high contrast text */
 }
 
-/* Tweak your go-back button */
-.go-back-button {
-  padding: 0.5rem 1rem;
-  background-color: #6c757d;
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  font-size: 1rem;
-}
-
-.go-back-button:hover {
-  background-color: #5a6268;
-}
-
-/* Ensure your container wraps both table and forms */
-.product-table.container {
-  margin: 2rem auto;
-  padding: 1.5rem;
-  background: linear-gradient(125deg, #ffffff, #e8e8ff, #ffffff);
-  border-radius: 20px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  max-width: 600px;
-  text-align: center;
-}
-
-/* Header */
-.product-table.container > h2 {
-  margin-bottom: 1rem;
-  color: #333;
-  font-size: 1.75rem;
-  font-weight: 600;
-}
-
-/* Products table */
-.product-table.container table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 1.5rem;
-}
-
-.product-table.container table thead tr {
-  background-color: #2575fc;
-  color: white;
-}
-
-.product-table.container table th,
-.product-table.container table td {
-  padding: 0.75rem 1rem;
-  border: none;
-  font-size: 1rem;
-}
-
-.product-table.container table tbody tr:nth-child(even) {
-  background-color: #f7f9ff;
-}
-
-.product-table.container table tbody tr:nth-child(odd) {
-  background-color: #ffffff;
-}
-
-/* Forms layout inside the same container */
-.product-table.container form {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-  flex-wrap: wrap;
-  margin-bottom: 1rem; /* space between forms or bottom of container */
-}
-
-/* Inputs and selects */
-.product-table.container form input[type="text"],
-.product-table.container form select {
-  padding: 0.5rem;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  font-size: 1rem;
-  min-width: 180px;
-}
-
-/* Buttons in forms */
-.product-table.container form button {
-  padding: 0.5rem 1rem;
-  background-color: #6a11cb;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.product-table.container form button:hover {
-  background-color: #4e0fa3;
-}
-
-/* Responsive: stack vertically on narrow screens */
-@media (max-width: 600px) {
-  .product-table.container form {
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-}
-
-/* Shared card base */
-.add-product-card,
-.delete-product-card {
-  background-color: #fff9e6;       /* light yellow tint */
-  border: 1px solid #ffeeba;       /* soft yellow border */
+/* Container styling */
+.table-container {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 30px;
+  background: white;
   border-radius: 12px;
-  padding: 1rem 1.5rem;
-  max-width: 400px;
-  margin: 1.5rem auto;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  border: 1px solid #E2E8F0;
 }
 
-/* Headings inside cards */
-.add-product-card h3,
-.delete-product-card h3 {
-  margin-top: 0;
-  color: #8a6d3b;
-  font-size: 1.25rem;
-  text-align: center;
-  margin-bottom: 0.75rem;
+/* Heading */
+.table-heading {
+  color: #0F172A;
+  /* Slate-900 */
+  margin-bottom: 0;
+  font-size: 1.5rem;
+  /* 24px */
+  font-weight: 600;
+  /* Regular semi-bold, not all caps */
+  letter-spacing: -0.025em;
+  text-transform: none;
+  text-decoration: none;
 }
 
-/* Forms inside cards */
-.add-product-card form,
-.delete-product-card form {
-  display: flex;
-  gap: 0.75rem;
-  flex-wrap: wrap;
-  justify-content: center;
+/* Table styling */
+.order-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin-top: 20px;
 }
 
-/* Inputs and selects */
-.add-product-card input[type="text"],
-.delete-product-card select {
-  flex: 1 1 200px;
-  padding: 0.5rem;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  font-size: 1rem;
+/* Table header */
+.order-table thead tr {
+  background-color: #F1F5F9;
+  /* Slate-100 */
 }
 
-/* Buttons in cards */
-.add-product-card button,
-.delete-product-card button {
-  padding: 0.5rem 1.25rem;
-  background-color: #f0ad4e;      /* bootstrap warning tint */
-  color: #fff;
+.order-table th {
+  padding: 16px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.875rem;
+  /* 14px */
+  color: #475569;
+  /* Slate-600 */
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 2px solid #E2E8F0;
+  position: sticky;
+  top: 0;
+}
+
+/* Table cells */
+.order-table td {
+  padding: 16px;
+  vertical-align: middle;
+  border-bottom: 1px solid #E2E8F0;
+  font-size: 0.95rem;
+  /* 15px */
+  color: #334155;
+  /* Slate-700 */
+}
+
+/* Alternating rows */
+.order-table .even-row {
+  background-color: #FFFFFF;
+}
+
+.order-table .odd-row {
+  background-color: #F8FAFC;
+  /* Very subtle alternating color */
+}
+
+.order-table tbody tr:hover {
+  background-color: #F1F5F9;
+  /* Hover state */
+}
+
+/* Action button */
+.delete-button {
+  background-color: #10B981;
+  /* Emerald-500 (Professional Green) */
+  color: white;
   border: none;
+  padding: 8px 16px;
   border-radius: 6px;
+  font-weight: 500;
+  font-size: 0.875rem;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
 
-.add-product-card button:hover,
-.delete-product-card button:hover {
-  background-color: #ec971f;
+.delete-button:hover {
+  background-color: #059669;
+  /* Emerald-600 */
+  transform: translateY(-1px);
 }
 
-/* Responsive stacking */
-@media (max-width: 480px) {
-  .add-product-card form,
-  .delete-product-card form {
-    flex-direction: column;
+/* No orders message */
+.no-orders {
+  text-align: center;
+  color: #64748B;
+  padding: 40px;
+  font-size: 1rem;
+  background: #F8FAFC;
+  border-radius: 8px;
+  border: 1px dashed #E2E8F0;
+}
+
+/* Product Management Section Grid (Managed inline but these help responsiveness) */
+.product-management-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+
+@media (max-width: 768px) {
+  .product-management-section {
+    grid-template-columns: 1fr !important;
   }
+
+  .table-container {
+    padding: 15px;
+  }
+}
+
+/* Header Buttons (Home/Logout) */
+.header-section button {
+  font-family: 'Inter', sans-serif;
+  transition: all 0.2s ease;
+}
+
+.header-section button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Form Styles */
+input[type="text"],
+input[type="email"],
+select {
+  font-family: 'Inter', sans-serif;
+  transition: border-color 0.15s ease-in-out;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+select:focus {
+  outline: none;
+  border-color: #4F46E5 !important;
+  /* Indigo-600 highlight */
+  box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.1);
 }

@@ -26,29 +26,11 @@ export default function VerificationPage() {
         try {
             const { data } = await axios.post(`${API_URL}/verify`, {
                 userId: user._id,
-                type: 'email',
                 otp: otp.email
             });
             toast.success("Email Verified!");
             // Update local storage
             const updatedUser = { ...user, isEmailVerified: true };
-            localStorage.setItem("user", JSON.stringify(updatedUser));
-            setUser(updatedUser);
-        } catch (err) {
-            toast.error(err.response?.data?.message || "Invalid OTP");
-        }
-    };
-
-    const handleVerifyPhone = async (e) => {
-        e.preventDefault();
-        try {
-            const { data } = await axios.post(`${API_URL}/verify`, {
-                userId: user._id,
-                type: 'phone',
-                otp: otp.phone
-            });
-            toast.success("Phone Verified!");
-            const updatedUser = { ...user, isPhoneVerified: true };
             localStorage.setItem("user", JSON.stringify(updatedUser));
             setUser(updatedUser);
         } catch (err) {
@@ -89,29 +71,6 @@ export default function VerificationPage() {
                         </div>
                     )}
                 </div>
-
-                {/* Phone Verification */}
-                {user.phoneNumber && (
-                    <div style={{ marginBottom: '20px', padding: '15px', border: '1px solid #ddd', borderRadius: '8px', background: user.isPhoneVerified ? '#f0fdf4' : 'white' }}>
-                        <label>Phone OTP ({user.phoneNumber})</label>
-                        {user.isPhoneVerified ? (
-                            <p style={{ color: 'green', fontWeight: 'bold' }}>✓ Verified</p>
-                        ) : (
-                            <div style={{ display: 'flex', gap: '10px', marginTop: '5px' }}>
-                                <input
-                                    type="text"
-                                    maxLength="4"
-                                    placeholder="4-digit Code"
-                                    value={otp.phone}
-                                    onChange={e => setOtp({ ...otp, phone: e.target.value })}
-                                    style={{ flex: 1 }}
-                                />
-                                <button onClick={handleVerifyPhone} className="login-button" style={{ width: 'auto', padding: '0 15px' }}>Verify</button>
-                            </div>
-                        )}
-                    </div>
-                )}
-
                 <button onClick={handleContinue} className="login-button" style={{ marginTop: '10px', background: user.isEmailVerified ? '#0f172a' : '#94a3b8' }}>
                     Continue to Dashboard
                 </button>

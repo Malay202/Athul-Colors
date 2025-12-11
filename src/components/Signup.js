@@ -76,6 +76,7 @@ export default function SignUp() {
             placeholder="Enter your phone number"
             value={formData.phoneNumber}
             onChange={handleChange}
+            required
           />
         </div>
         <div className="form-group">
