@@ -24,9 +24,8 @@ export default function SignUp() {
       const response = await axios.post(`${API_URL}/signup`, formData);
       console.log(response);
       toast.success("Signup Success!")
-      const orderId = response.data.user._id;
       localStorage.setItem("user", JSON.stringify(response.data.user));
-      localStorage.setItem("token", response.data.token);
+      // Token is NOT sent on signup anymore. User must verify and then login.
 
       navigate("/verify")
     } catch (error) {

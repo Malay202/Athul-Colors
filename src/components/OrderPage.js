@@ -13,7 +13,7 @@ export default function OrderPage() {
   const [products, setProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [quantity, setQuantity] = useState(1);
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true); // Unused
   const [showModal, setShowModal] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
@@ -31,9 +31,11 @@ export default function OrderPage() {
 
   const handleConfirmPurchase = async () => {
     try {
-      await axios.post(`${API_URL}/checkout/${id}`, {
-        items: consolidatedOrders
-      });
+      const token = localStorage.getItem("token");
+      await axios.post(`${API_URL}/checkout/${id}`,
+        { items: consolidatedOrders },
+        { headers: { "Authorization": token } }
+      );
 
       setShowModal(false);
       setOrders([]); // Clear local cart
@@ -46,17 +48,18 @@ export default function OrderPage() {
 
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
     axios
-      .get(`${API_URL}/order/${id}`)
+      .get(`${API_URL}/order/${id}`, { headers: { "Authorization": token } })
       .then((response) => {
         // Consolidate orders on fetch if needed, or just set raw
         // We will handle consolidation in the render or a helper
         setOrders(response.data.orders || []);
-        setLoading(false);
+        // setLoading(false);
       })
       .catch((err) => {
         console.log("Error fetching orders:", err);
-        setLoading(false);
+        // setLoading(false);
       });
   }, [id]);
 
@@ -91,8 +94,9 @@ export default function OrderPage() {
       orders: [{ productName: selectedProduct.name, quantity: Number(quantity) }],
     };
 
+    const token = localStorage.getItem("token");
     axios
-      .post(`${API_URL}/order/${id}`, payload)
+      .post(`${API_URL}/order/${id}`, payload, { headers: { "Authorization": token } })
       .then((response) => {
         setOrders(response.data.order.orders);
         toast.success("Order line created successfully.");
@@ -109,19 +113,7 @@ export default function OrderPage() {
       });
   };
 
-  const handleDelete = async (itemId) => {
-    const confirmDelete = window.confirm("Are you sure you want to remove this line item?");
-    if (!confirmDelete) return;
 
-    try {
-      await axios.delete(`${API_URL}/order/${id}/${itemId}`);
-      setOrders((prev) => prev.filter((item) => item._id !== itemId));
-      toast.info("Line item removed.");
-    } catch (error) {
-      console.error("Error deleting order:", error);
-      toast.error("Failed to remove item.");
-    }
-  };
 
   // Helper to check if string is a valid hex color for display style
   const isColor = (strColor) => {
@@ -288,7 +280,8 @@ export default function OrderPage() {
                           const confirmDelete = window.confirm(`Remove all ${order.quantity} units of ${order.productName}?`);
                           if (confirmDelete) {
                             // Map all deletes
-                            Promise.all(order.ids.map(itemId => axios.delete(`${API_URL}/order/${id}/${itemId}`)))
+                            const token = localStorage.getItem("token");
+                            Promise.all(order.ids.map(itemId => axios.delete(`${API_URL}/order/${id}/${itemId}`, { headers: { "Authorization": token } })))
                               .then(() => {
                                 setOrders(prev => prev.filter(o => o.productName !== order.productName));
                                 toast.info("Line item removed.");

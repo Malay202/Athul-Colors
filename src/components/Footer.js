@@ -12,8 +12,7 @@ function Footer() {
               <div className="col-md-3">
                 <h1 className="logo">Athul Colours</h1>
                 <p className="footer-text">
-                  Lorem ipsum Here are thriteen health benefits of apples Lorem
-
+                  Athul Colours provides high-quality pigments and coating solutions for industrial and artistic applications.
                 </p>
               </div>
               <div className="col-md-3">
@@ -33,9 +32,7 @@ function Footer() {
                   <li>
                     <Link to="services" spy={true} smooth={true} duration={1000} > Products </Link>
                   </li>
-                  <li>
-                    <Link to="contact" spy={true} smooth={true} duration={1000}> Contact  </Link>
-                  </li>
+
                 </ul>
               </div>
             </div>

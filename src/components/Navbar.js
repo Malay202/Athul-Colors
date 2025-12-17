@@ -6,7 +6,7 @@ import logo from '../assets/ac_logo.jpg';
 
 function Navbar() {
   const navigate = useNavigate();
-  const user = JSON.parse(localStorage.getItem("user"));
+  const user = localStorage.getItem("token") ? JSON.parse(localStorage.getItem("user")) : null;
 
   const handleLogout = () => {
     localStorage.removeItem("user");
@@ -104,18 +104,7 @@ function Navbar() {
                 About
               </ScrollLink>
             </li>
-            <li>
-              <ScrollLink
-                onClick={openBar}
-                to="contact"
-                spy={true}
-                smooth={true}
-                duration={1000}
-                activeClass="active"
-              >
-                Contact
-              </ScrollLink>
-            </li>
+
             {user ? (
               <>
                 {user.isAdmin ? (

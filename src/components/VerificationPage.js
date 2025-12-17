@@ -43,7 +43,8 @@ export default function VerificationPage() {
             toast.warning("Please verify email to continue.");
             return;
         }
-        navigate("/");
+        toast.success("Verification complete! Please login to continue.");
+        navigate("/login");
     };
 
     return (

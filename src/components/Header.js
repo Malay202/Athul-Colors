@@ -5,6 +5,14 @@ function Header() {
     <header>
       <video src={video} loop autoPlay muted></video>
       <h1>WE ARE ATHUL COLOURS</h1>
+      {(() => {
+        const user = localStorage.getItem("token") ? JSON.parse(localStorage.getItem("user")) : null;
+        return user ? (
+          <h2 style={{ color: 'white', marginTop: '20px', zIndex: 2, fontSize: '2rem', fontWeight: '300' }}>
+            Welcome, {user.userName}
+          </h2>
+        ) : null;
+      })()}
       <div className="row">
         {/* <button className="btn" style={{ cursor: "pointer" }}>
           Sign Up
